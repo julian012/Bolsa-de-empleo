@@ -26,10 +26,6 @@ public class Department {
 		return cityList;
 	}
 
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", cityList=" + cityList + "]";
-	}
 	
 	
 }

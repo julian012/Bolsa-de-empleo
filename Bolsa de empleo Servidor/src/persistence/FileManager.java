@@ -41,19 +41,4 @@ public class FileManager {
 		return departmentList;
 	}
 	
-	public static void main(String[] args) {
-		FileManager f = new FileManager();
-		try {
-			f.readDepartmentJson();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

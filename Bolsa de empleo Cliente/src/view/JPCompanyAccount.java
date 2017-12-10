@@ -164,11 +164,11 @@ public class JPCompanyAccount extends JPanel implements MouseListener, KeyListen
 	
 	public void setCitiesList(String[] values) {
 		System.out.println(values);
-//		for (int i = 0; i < values.length; i++) {
-//			jCCitiesList.insertItemAt(values[i], i);
-//		}
-//		jCCitiesList.setEnabled(true);
-		
+		jCCitiesList.removeAll();
+		for (int i = 0; i < values.length; i++) {
+			jCCitiesList.insertItemAt(values[i], i);
+		}
+		jCCitiesList.setEnabled(true);
 	}
 	
 	public int getId() {

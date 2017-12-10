@@ -49,10 +49,12 @@ public class Server extends Thread{
 	
 	private void initServices(Socket socket) throws IOException {
 		DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-		if (inputStream.readUTF().equals(Request.DEPARTMENT_LIST.toString())) {
+		String option = inputStream.readUTF();
+		if (option.equals(Request.DEPARTMENT_LIST.toString())) {
 			sendDepartmentList(socket);
-		}else if(inputStream.readUTF().equals(Request.CITY_LIST.toString())){
+		}else if(option.equals(Request.CITY_LIST.toString())){
 			String name = inputStream.readUTF();
+			System.out.println(name + "sfdfdf");
 			sendCityList(socket, name);
 		}else {
 			String type = inputStream.readUTF();
@@ -64,6 +66,7 @@ public class Server extends Thread{
 	}
 	
 	private void sendCityList(Socket socket, String name ) throws IOException {
+		System.out.println(name + " Llego este departamento");
 		DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 		for (Department department : departmentList) {
 			if(department.getName().equals(name)) {
@@ -160,9 +163,9 @@ public class Server extends Thread{
 	public void run() {
 		while(serverUp) {
 			try {
-				System.out.println("Esperando coneccion");
+				System.out.println("Esperando conexion");
 				Socket socket = serverSocket.accept();
-				System.out.println("Connectado: " + socket);
+				System.out.println("Conectado: " + socket);
 				removeClosedConnection();
 				initServices(socket);
 			} catch (IOException e) {

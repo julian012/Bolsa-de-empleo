@@ -52,4 +52,29 @@ public class Client extends Thread{
 			}
 		}
 	}
+
+	public String[] getDeparmentList() throws IOException {
+		socket = new Socket(host, port);
+		inputStream = new DataInputStream(socket.getInputStream());
+		outputStream = new DataOutputStream(socket.getOutputStream());
+		outputStream.writeUTF(Request.DEPARTMENT_LIST.toString());
+		String[] values = new String[inputStream.readInt()];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = inputStream.readUTF();
+		}
+		return values;
+	}
+	
+	public String[] getCitiesList(String department) throws IOException {
+		socket = new Socket(host, port);
+		inputStream = new DataInputStream(socket.getInputStream());
+		outputStream = new DataOutputStream(socket.getOutputStream());
+		outputStream.writeUTF(Request.CITY_LIST.toString());
+		outputStream.writeUTF(department);
+		String[] values = new String[inputStream.readInt()];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = inputStream.readUTF();
+		}
+		return values;
+	}
 }

@@ -23,6 +23,7 @@ public class Server extends Thread{
 		employeeList = new ArrayList<>();
 		jobOfferList = new ArrayList<>();
 		connectionList = new ArrayList<>();
+		departmentList = new ArrayList<>();
 	}
 	
 	public void startServer() {
@@ -48,13 +49,42 @@ public class Server extends Thread{
 	
 	private void initServices(Socket socket) throws IOException {
 		DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-		String type = inputStream.readUTF();
-		String email = inputStream.readUTF();
-		String password = inputStream.readUTF();
-		signIn(type, email, password, socket);
+		if (inputStream.readUTF().equals(Request.DEPARTMENT_LIST.toString())) {
+			sendDepartmentList(socket);
+		}else if(inputStream.readUTF().equals(Request.CITY_LIST.toString())){
+			String name = inputStream.readUTF();
+			sendCityList(socket, name);
+		}else {
+			String type = inputStream.readUTF();
+			String email = inputStream.readUTF();
+			String password = inputStream.readUTF();
+			signIn(type, email, password, socket);
+		}
 		inputStream.close();
 	}
 	
+	private void sendCityList(Socket socket, String name ) throws IOException {
+		DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+		for (Department department : departmentList) {
+			if(department.getName().equals(name)) {
+				outputStream.writeInt(department.getCityList().size());
+				for (int i = 0; i < department.getCityList().size(); i++) {
+					outputStream.writeUTF(department.getCityList().get(i).getName());
+				}
+			}
+		}
+		outputStream.close();
+	}
+	
+	private void sendDepartmentList(Socket socket) throws IOException {
+		DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+		outputStream.writeInt(departmentList.size());
+		for (int i = 0; i < departmentList.size(); i++) {
+			outputStream.writeUTF(departmentList.get(i).getName());
+		}
+		outputStream.close();
+	}
+
 	private void signIn(String type, String email, String password,Socket socket) {
 		switch (type) {
 		case "SELECT_JEMPLOYEE":
@@ -114,6 +144,16 @@ public class Server extends Thread{
 				i--;
 			}
 		}
+	}
+	
+	public ArrayList<City> getCitiesList(String name) {
+		for (Department d : departmentList) {
+			if (name.equals(d.getName())) {
+				return d.getCityList();
+			}
+		}
+		
+		return null;
 	}
 	
 	@Override

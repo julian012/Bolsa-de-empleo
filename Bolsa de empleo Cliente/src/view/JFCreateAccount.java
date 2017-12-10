@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -51,10 +52,6 @@ public class JFCreateAccount extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	public String getDepartmentEmployee() {
-		return employeeAccount.getDepartment();
-	}
-	
 	public String getDepartmentCompany() {
 		return companyAccount.getDepartment();
 	}
@@ -65,5 +62,93 @@ public class JFCreateAccount extends JFrame{
 	
 	public void setCititesListCompany(String[] values) {
 		companyAccount.setCitiesList(values);
+	}
+	
+	public int getIdCompany() {
+		return companyAccount.getId();
+	}
+	
+	public String getNameCompany() {
+		return companyAccount.getName();
+	}
+	
+	public String getDecriptionCompany() {
+		return companyAccount.getDecription();
+	}
+	
+	public String getEmailCompany() {
+		return companyAccount.getEmail();
+	}
+	
+	public String getPhotoPathCompany() {
+		return companyAccount.getPhotoPath();
+	}
+	
+	public String getPasswordCompany() {
+		return companyAccount.getPassword();
+	}
+	
+	public String getNumerPhoneCompany() {
+		return companyAccount.getNumerPhone();
+	}
+	
+	public String getAddressCompany() {
+		return companyAccount.getAddress();
+	}
+	
+	public String getCityCompany() {
+		return companyAccount.getCity();
+	}
+	
+	public String getDepartmentEmployee() {
+		return employeeAccount.getDepartment();
+	}
+	
+	public int getIdEmployee() {
+		return employeeAccount.getId();
+	}
+	
+	public String pathPhotoEmployee() {
+		return employeeAccount.pathPhoto();
+	}
+	
+	public String getEmailEmployee() {
+		return employeeAccount.getEmail();
+	}
+	
+	public String getPasswordEmployee() {
+		return employeeAccount.getPassword();
+	}
+	
+	public String getNumberPhoneEmployee() {
+		return employeeAccount.getNumberPhone();
+	}
+	
+	public String getAddressEmployee() {
+		return employeeAccount.getAddress();
+	}
+	
+	public String getCityEmployee() {
+		return employeeAccount.getCity();
+	}
+	
+	public String firstNameEmployee() {
+		return employeeAccount.firstName();
+	}
+	
+	public String lastNameEmployee() {
+		return employeeAccount.lastName();
+	}
+	
+	public Date getBirthDateEmployee() {
+		return employeeAccount.getBirthDate();
+	}
+	
+	public String getJobTitleEmployee() {
+		return employeeAccount.getJobTitle();
+	}
+	
+	public String getProfesionalPofileEmployee() {
+		return employeeAccount.getProfesionalPofile();
 	}
 }

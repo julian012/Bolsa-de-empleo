@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -125,7 +126,7 @@ public class ControllerManager implements ActionListener, WindowListener{
 			createAccountCompany();
 			break;
 		case CREATE_ACCOUNT_EMPLOYEE:
-			setCitiesListEmployee();
+			createAccountEmployee();
 			break;
 		case GET_DEPARTMENT_COMPANY:
 			setCitiesListCompany();
@@ -140,9 +141,35 @@ public class ControllerManager implements ActionListener, WindowListener{
 
 
 
-	private void createAccountCompany() {
-		// TODO Auto-generated method stub
+	private void createAccountEmployee() {
+		String email = createAccount.getEmailEmployee();
+		String photoPath = createAccount.pathPhotoEmployee();
+		String password = createAccount.getPasswordEmployee();
+		String numberPhone = createAccount.getNumberPhoneEmployee();
+		String address = createAccount.getAddressEmployee();
+		String city = createAccount.getCityEmployee();
+		String department = createAccount.getDepartmentEmployee();
+		int id = createAccount.getIdEmployee();
+		String firstName = createAccount.firstNameEmployee();
+		String lastName = createAccount.lastNameEmployee();
+		Date birthDate = createAccount.getBirthDateEmployee();
+		String jobTitle = createAccount.getJobTitleEmployee();
+		String professionalPorfile = createAccount.getProfesionalPofileEmployee();
+		client.createAccountEmployee(email, photoPath, password, numberPhone, address, city, department, id, firstName, lastName, birthDate, jobTitle, professionalPorfile);
+	}
 
+	private void createAccountCompany() {
+		int id = createAccount.getIdCompany();
+		String email = createAccount.getEmailCompany();
+		String photoPath = createAccount.getPhotoPathCompany();
+		String numberPhone = createAccount.getNumerPhoneCompany();
+		String address = createAccount.getAddressCompany();
+		String city = createAccount.getCityCompany();
+		String department = createAccount.getDepartmentCompany();
+		String name = createAccount.getNameCompany();
+		String description = createAccount.getDecriptionCompany();
+		String password = createAccount.getPasswordCompany();
+		client.createAccountCompany(email, photoPath, password, numberPhone, address, city, department, id, name, description);
 	}
 
 	public static void main(String[] args) {

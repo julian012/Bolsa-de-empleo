@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 public class Client extends Thread{
 	
@@ -76,5 +77,17 @@ public class Client extends Thread{
 			values[i] = inputStream.readUTF();
 		}
 		return values;
+	}
+	
+	public void createAccountEmployee(String email, String photoPath, String password, String numberPhone,
+			String address, String city, String department, int id, String firstName, String lastName,
+			Date birthDate, String jobTitle, String professionalPorfile) {
+		
+		
+	}
+	
+	public void createAccountCompany(String email, String photoPath, String password, String numberPhone,
+			String address, String city, String department, int id, String name, String description) {
+		
 	}
 }

@@ -163,12 +163,12 @@ public class JPCompanyAccount extends JPanel implements MouseListener, KeyListen
 	}
 	
 	public void setCitiesList(String[] values) {
-		System.out.println(values);
-		jCCitiesList.removeAll();
-		for (int i = 0; i < values.length; i++) {
-			jCCitiesList.insertItemAt(values[i], i);
-		}
-		jCCitiesList.setEnabled(true);
+		jCCitiesList.setVisible(false);
+		constraints.ipady = 10;
+		constraints.gridy = 8;
+		jCCitiesList = new JComboBox<>(values);
+		jCCitiesList.setBorder(BorderFactory.createTitledBorder("Ciudad"));
+		add(jCCitiesList, constraints);
 	}
 	
 	public int getId() {
@@ -205,6 +205,10 @@ public class JPCompanyAccount extends JPanel implements MouseListener, KeyListen
 	
 	public String getDepartment() {
 		return String.valueOf(jCDepartmentList.getSelectedItem());
+	}
+	
+	public String getCity() {
+		return String.valueOf(jCCitiesList.getSelectedItem());
 	}
 
 	@Override

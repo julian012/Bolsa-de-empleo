@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -182,17 +183,65 @@ public class JPEmployeeAccount extends JPanel implements MouseListener, KeyListe
 		
 	}
 	
+	public void setCitiesList(String[] values) {
+		jCCitiesList.setVisible(false);
+		constraints.ipady = 10;
+		constraints.gridy = 10;
+		jCCitiesList = new JComboBox<>(values);
+		jCCitiesList.setBorder(BorderFactory.createTitledBorder("Ciudad"));
+		add(jCCitiesList, constraints);
+	}
+	
 	public String getDepartment() {
 		return String.valueOf(jCDepartmentList.getSelectedItem());
 	}
 	
-	public void setCitiesList(String[] values) {
-		System.out.println(values);
-		jCCitiesList.removeAll();
-		for (int i = 0; i < values.length; i++) {
-			jCCitiesList.insertItemAt(values[i], i);
-		}
-		jCCitiesList.setEnabled(true);
+	public int getId() {
+		return Integer.parseInt(jTid.getText());
+	}
+	
+	public String pathPhoto() {
+		return jTPath.getText();
+	}
+	
+	public String getEmail() {
+		return jTEmail.getText();
+	}
+	
+	public String getPassword() {
+		return new String(jTPassword.getPassword());
+	}
+	
+	public String getNumberPhone() {
+		return jTNumberPhone.getText();
+	}
+	
+	public String getAddress() {
+		return jTAddress.getText();
+	}
+	
+	public String getCity() {
+		return String.valueOf(jCCitiesList.getSelectedItem());
+	}
+	
+	public String firstName() {
+		return jTFistName.getText();
+	}
+	
+	public String lastName() {
+		return jTLastName.getText();
+	}
+	
+	public Date getBirthDate() {
+		return birthDate.getDate();
+	}
+	
+	public String getJobTitle() {
+		return jTJobTile.getText();
+	}
+	
+	public String getProfesionalPofile() {
+		return jTAProfessionalPorfile.getText();
 	}
 
 	@Override

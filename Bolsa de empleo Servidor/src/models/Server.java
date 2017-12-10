@@ -57,10 +57,10 @@ public class Server extends Thread{
 	
 	private void signIn(String type, String email, String password,Socket socket) {
 		switch (type) {
-		case "Employee":
+		case "SELECT_JEMPLOYEE":
 			signInEmployee(email, password, socket);
 			break;
-		case "Company" :
+		case "SELECT_JCOMPANY" :
 			singInCompany(email, password, socket);
 			break;
 		default:
@@ -120,7 +120,9 @@ public class Server extends Thread{
 	public void run() {
 		while(serverUp) {
 			try {
+				System.out.println("Esperando coneccion");
 				Socket socket = serverSocket.accept();
+				System.out.println("Connectado: " + socket);
 				removeClosedConnection();
 				initServices(socket);
 			} catch (IOException e) {

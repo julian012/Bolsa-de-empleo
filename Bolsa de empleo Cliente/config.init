@@ -1,2 +1,2 @@
-host = "localhost"
-port = "3011"
+host = localhost
+port = 3011

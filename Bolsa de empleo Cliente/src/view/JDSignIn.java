@@ -5,22 +5,25 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.ControllerManager;
 import controller.Events;
 
-public class JDSignIn extends JDialog implements MouseListener, WindowListener {
-	
+public class JDSignIn extends JFrame implements MouseListener, WindowListener, ActionListener {
+
 	private static final long serialVersionUID = 1L;
 	private JButton jbCompany;
 	private JButton jbEmployee;
@@ -33,13 +36,13 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 	private int xCompany, xEmployee, xCreateAccount;
 	private ControllerManager controllerManager;
 	private String getActualButtom;
-	
+
 	public JDSignIn(ControllerManager controllerManager) {
 		this.controllerManager = controllerManager;
 		setTitle(Constant.TITLE);
 		this.getContentPane().setBackground(Constant.BACKGROUND);
 		setSize(543, 225);
-		//setIconImage(new ImageIcon("files/imagenes/icono.png").getImage());
+		setIconImage(new ImageIcon("files/imagenes/icon.png").getImage());
 		setUndecorated(false);
 		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
@@ -50,7 +53,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		setResizable(false);
 		setVisible(true);
 	}
-	
+
 	public void initValues() {
 		employee = false;
 		company = true;
@@ -58,7 +61,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		getActualButtom = Events.SELECT_JCOMPANY.toString();
 		changeColorCompany(company);
 	}
-	
+
 	public void initComponents() {
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.gridheight = 1;
@@ -71,7 +74,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		addCreateAccount();
 		addJTextField();
 	}
-	
+
 	public void addJTextField() {
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.gridx = 1;
@@ -98,7 +101,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		jBSignIn.setActionCommand(Events.SIGN_IN.toString());
 		add(jBSignIn, constraints);
 	}
-	
+
 	public void addCompany() {
 		constraints.gridx = 1;
 		jbCompany = new JButton(Constant.BUTTOM_COMPANY);
@@ -107,11 +110,11 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		jbCompany.setFont(Constant.FONT_MENU);
 		jbCompany.setForeground(Color.WHITE);
 		jbCompany.addMouseListener(this);
-		jbCompany.addActionListener(controllerManager);
+		jbCompany.addActionListener(this);
 		jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
 		add(jbCompany, constraints);
 	}
-	
+
 	public void addEmployee() {
 		constraints.gridx = 3;
 		jbEmployee = new JButton(Constant.BUTTOM_EMPOLYEE);
@@ -120,7 +123,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		jbEmployee.setFont(Constant.FONT_MENU);
 		jbEmployee.setForeground(Color.WHITE);
 		jbEmployee.addMouseListener(this);
-		jbEmployee.addActionListener(controllerManager);
+		jbEmployee.addActionListener(this);
 		jbEmployee.setActionCommand(Events.SELECT_JEMPLOYEE.toString());
 		add(jbEmployee, constraints);
 	}
@@ -133,11 +136,11 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 		jbCreateAccount.setFont(Constant.FONT_MENU);
 		jbCreateAccount.setForeground(Color.WHITE);
 		jbCreateAccount.addMouseListener(this);
-		jbCreateAccount.addActionListener(controllerManager);
+		jbCreateAccount.addActionListener(this);
 		jbCreateAccount.setActionCommand(Events.SELECT_CREATEACCOUNT.toString());
 		add(jbCreateAccount, constraints);
 	}
-	
+
 	public void changeColorButtom(int x) {
 		if (x == xCompany) {
 			changeColorCompany(true);
@@ -147,7 +150,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 			changeColorCreateAccount(true);
 		}
 	}
-	
+
 	public void goBackChangeColor(int x) {
 		if (x == xCompany) {
 			changeColorCompany(false);
@@ -157,7 +160,7 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 			changeColorCreateAccount(false);
 		}
 	}
-	
+
 	public void changeColorCompany(boolean value) {
 		if (value) {
 			jbCompany.setBackground(Constant.COLOR_SELECTED);
@@ -166,13 +169,14 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 			if (company) {
 				jbCompany.setBackground(Constant.COLOR_SELECTED);
 				jbCompany.setBorder(BorderFactory.createLineBorder(Constant.COLOR_SELECTED));
+				jBSignIn.setText(Constant.BUTTOM_SIGNIN);
 			}else {
 				jbCompany.setBackground(Constant.COLORBLUE);
 				jbCompany.setBorder(BorderFactory.createLineBorder(Constant.COLORBLUE));
 			}
 		}
 	}
-	
+
 	public void changeColorEmployee(boolean value) {
 		if (value) {
 			jbEmployee.setBackground(Constant.COLOR_SELECTED);
@@ -181,13 +185,14 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 			if (employee) {
 				jbEmployee.setBackground(Constant.COLOR_SELECTED);
 				jbEmployee.setBorder(BorderFactory.createLineBorder(Constant.COLOR_SELECTED));
+				jBSignIn.setText(Constant.BUTTOM_SIGNIN);
 			}else {
 				jbEmployee.setBackground(Constant.COLORBLUE);
 				jbEmployee.setBorder(BorderFactory.createLineBorder(Constant.COLORBLUE));
 			}
 		}
 	}
-	
+
 	public void changeColorCreateAccount(boolean value) {
 		if (value) {
 			jbCreateAccount.setBackground(Constant.COLOR_SELECTED);
@@ -196,19 +201,47 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 			if (createAccount) {
 				jbCreateAccount.setBackground(Constant.COLOR_SELECTED);
 				jbCreateAccount.setBorder(BorderFactory.createLineBorder(Constant.COLOR_SELECTED));
+				jBSignIn.setText("Continuar");
 			}else {
 				jbCreateAccount.setBackground(Constant.COLORBLUE);
 				jbCreateAccount.setBorder(BorderFactory.createLineBorder(Constant.COLORBLUE));
 			}
 		}
 	}
-	
+
 	public void setSelectedButtom(String value) {
 		getActualButtom = value;
 	}
-	
+
 	public String getSelectedButtom() {
 		return getActualButtom;
+	}
+
+	public String getEmail() {
+		return jTFEmail.getText();
+	}
+
+	public char[] getPassword() {
+		return jTFPassword.getPassword();
+	}
+	
+	public void selectedButtom(String value) {
+		if (value.equals(Events.SELECT_JEMPLOYEE.toString())) {
+			employee = true;
+			company = false;
+			createAccount = false;
+		}else if(value.equals(Events.SELECT_JCOMPANY.toString())) {
+			employee = false;
+			company = true;
+			createAccount = false;
+		}else if (value.equals(Events.SELECT_CREATEACCOUNT.toString())) {
+			employee = false;
+			company = false;
+			createAccount = true;
+		}
+		changeColorEmployee(false);
+		changeColorCompany(false);
+		changeColorCreateAccount(false);
 	}
 
 	@Override
@@ -229,14 +262,14 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-	
+
 	@Override
 	public void paint(Graphics arg0) {
 		xCompany = jbCompany.getX();
 		xEmployee = jbEmployee.getX();
 		xCreateAccount = jbCreateAccount.getX();
 	}
-	
+
 	@Override
 	public void windowActivated(WindowEvent e) {}
 
@@ -261,5 +294,12 @@ public class JDSignIn extends JDialog implements MouseListener, WindowListener {
 
 	@Override
 	public void windowOpened(WindowEvent e) {}
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String value = e.getActionCommand();
+		getActualButtom = value;
+		selectedButtom(value);
+	}
+
 }

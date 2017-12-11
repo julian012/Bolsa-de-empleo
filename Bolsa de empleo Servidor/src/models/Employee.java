@@ -25,6 +25,19 @@ public class Employee extends Account {
 		setProfessionalProfile(professionalProfile);
 		setNotification(notification);
 	}
+	
+	public Employee(String email, String password, String namePhoto, String numberPhone, String address, City city,
+			int idEmployee, String fistName, String lastName, Date birthDate, String jobTitle,
+			String professionalProfile) {
+		super(email, password, namePhoto, numberPhone, address, city);
+		setIdEmployee(idEmployee);
+		setFistName(fistName);
+		setLastName(lastName);
+		setBirthDate(birthDate);
+		setJobTitle(jobTitle);
+		setProfessionalProfile(professionalProfile);
+		notification = new Stack<>();
+	}
 
 	public int getIdEmployee() {
 		return idEmployee;

@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import utilities.Utilities;
 
 public class Server extends Thread{
 	
@@ -16,6 +20,7 @@ public class Server extends Thread{
 	private ArrayList<Employee> employeeList;
 	private ArrayList<JobOffer> jobOfferList;
 	private ArrayList<Connection> connectionList;
+	private static final Logger LOGGER = Logger.getAnonymousLogger();
 	
 	public Server(int port) throws IOException {
 		serverSocket = new ServerSocket(port);
@@ -76,13 +81,43 @@ public class Server extends Thread{
 			String password = inputStream.readUTF();
 			signIn(type, email, password, socket);
 		}
-		
-		
-		inputStream.close();
 	}
 	
-	private void createAccountEmployee(Socket socket) {
-		
+	private void createAccountEmployee(Socket socket) throws IOException {
+		DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+		String email = inputStream.readUTF();
+		String password = inputStream.readUTF();
+		String numberPhone = inputStream.readUTF();
+		String address = inputStream.readUTF();
+		String city = inputStream.readUTF();
+		String department = inputStream.readUTF();
+		int id = inputStream.readInt();
+		String firstName = inputStream.readUTF();
+		String lastName = inputStream.readUTF();
+		String birthDate = inputStream.readUTF();
+		String jobTitle = inputStream.readUTF();
+		String professionalPorfile = inputStream.readUTF();
+		String nameImage = inputStream.readUTF();
+		byte[] imageData = new byte[inputStream.readInt()];
+		inputStream.readFully(imageData);
+		Employee employee = new Employee(email, password, nameImage, numberPhone, address, searchCityByName(department, city), id, firstName, 
+				lastName, Utilities.StringToDate(birthDate), jobTitle, professionalPorfile);
+		Utilities.saveImage(imageData, nameImage);
+		employeeList.add(employee);
+		connectionList.add(new Connection(socket, this, employee));
+	}
+	
+	private City searchCityByName(String department, String city) {
+		for (Department d : departmentList) {
+			if (d.getName().equals(department)) {
+				for (City c : d.getCityList()) {
+					if (c.getName().equals(city)) {
+						return c;
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	private void sendCityList(Socket socket, String name ) throws IOException {
@@ -127,8 +162,7 @@ public class Server extends Thread{
 				try {
 					connectionList.add(new Connection(socket, this, company));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE, e.getMessage());
 				}
 			}
 		}
@@ -141,7 +175,7 @@ public class Server extends Thread{
 				try {
 					connectionList.add(new Connection(socket, this, e));
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					LOGGER.log(Level.SEVERE, e1.getMessage());
 				}
 			}
 		}
@@ -156,7 +190,7 @@ public class Server extends Thread{
 			outputStream.close();
 			socket.close();
 		} catch (IOException e1) {
-			System.out.println(e1.getMessage());
+			LOGGER.log(Level.SEVERE, e1.getMessage());
 		}
 	}
 	
@@ -189,7 +223,7 @@ public class Server extends Thread{
 				removeClosedConnection();
 				initServices(socket);
 			} catch (IOException e) {
-				System.out.println(e.getMessage());
+				LOGGER.log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}

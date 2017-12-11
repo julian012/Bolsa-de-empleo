@@ -22,7 +22,7 @@ public class Connection extends Thread{
 		connectionUp = true;
 		this.server = server;
 		this.employee = employee;
-		outputStream.writeUTF(Request.START_PROGRAM.toString());
+		//outputStream.writeUTF(Request.START_PROGRAM.toString());
 		start();
 	}
 

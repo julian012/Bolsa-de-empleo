@@ -157,9 +157,20 @@ public class ControllerManager implements ActionListener, WindowListener{
 		String professionalPorfile = createAccount.getProfesionalPofileEmployee();
 		try {
 			client.createAccountEmployee(email, photoPath, password, numberPhone, address, city, department, id, firstName, lastName, birthDate, jobTitle, professionalPorfile);
+			Thread.sleep(4000);
+			validateStart(client.isConnection());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void validateStart(boolean result) {
+		if (result) {
+			System.out.println("Buena");
 		}
 	}
 

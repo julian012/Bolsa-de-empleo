@@ -155,7 +155,12 @@ public class ControllerManager implements ActionListener, WindowListener{
 		Date birthDate = createAccount.getBirthDateEmployee();
 		String jobTitle = createAccount.getJobTitleEmployee();
 		String professionalPorfile = createAccount.getProfesionalPofileEmployee();
-		client.createAccountEmployee(email, photoPath, password, numberPhone, address, city, department, id, firstName, lastName, birthDate, jobTitle, professionalPorfile);
+		try {
+			client.createAccountEmployee(email, photoPath, password, numberPhone, address, city, department, id, firstName, lastName, birthDate, jobTitle, professionalPorfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void createAccountCompany() {

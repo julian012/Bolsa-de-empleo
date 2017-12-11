@@ -74,7 +74,8 @@ public class Client extends Thread{
 		socket = new Socket(host, port);
 		inputStream = new DataInputStream(socket.getInputStream());
 		outputStream = new DataOutputStream(socket.getOutputStream());
-		
+		outputStream.writeUTF(Request.SEND_INFO_EMPLOYEE_ACCOUNT.toString());
+		outputStream.writeUTF(email);
 	}
 	
 	public void createAccountCompany(String email, String photoPath, String password, String numberPhone,

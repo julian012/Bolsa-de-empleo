@@ -50,19 +50,39 @@ public class Server extends Thread{
 	private void initServices(Socket socket) throws IOException {
 		DataInputStream inputStream = new DataInputStream(socket.getInputStream());
 		String option = inputStream.readUTF();
-		if (option.equals(Request.DEPARTMENT_LIST.toString())) {
-			sendDepartmentList(socket);
-		}else if(option.equals(Request.CITY_LIST.toString())){
-			String name = inputStream.readUTF();
-			System.out.println(name + "sfdfdf");
-			sendCityList(socket, name);
-		}else {
-			String type = inputStream.readUTF();
+		try {
+			switch (Request.valueOf(option)) {
+			case DEPARTMENT_LIST:
+				sendDepartmentList(socket);
+				break;
+			case CITY_LIST:
+				String name = inputStream.readUTF();
+				sendCityList(socket, name);
+				break;
+			case SEND_INFO_EMPLOYEE_ACCOUNT:
+				createAccountEmployee(socket);
+				break;
+				
+			case SEND_INFO_COMPANY_ACCOUNT:
+				
+				break;
+			default:
+				
+				break;
+			}
+		}catch (Exception e) {
+			String type = option;
 			String email = inputStream.readUTF();
 			String password = inputStream.readUTF();
 			signIn(type, email, password, socket);
 		}
+		
+		
 		inputStream.close();
+	}
+	
+	private void createAccountEmployee(Socket socket) {
+		
 	}
 	
 	private void sendCityList(Socket socket, String name ) throws IOException {

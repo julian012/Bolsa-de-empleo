@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
 
@@ -11,11 +12,11 @@ public class Employee extends Account {
 	private Date birthDate;
 	private String jobTitle;
 	private String professionalProfile;
-	private Stack<NotificationEmployee> notification;
+	private ArrayList<NotificationEmployee> notification;
 	
 	public Employee(String email, String password, String namePhoto, String numberPhone, String address, City city,
 			int idEmployee, String fistName, String lastName, Date birthDate, String jobTitle,
-			String professionalProfile, Stack<NotificationEmployee> notification) {
+			String professionalProfile, ArrayList<NotificationEmployee> notification) {
 		super(email, password, namePhoto, numberPhone, address, city);
 		setIdEmployee(idEmployee);
 		setFistName(fistName);
@@ -36,7 +37,7 @@ public class Employee extends Account {
 		setBirthDate(birthDate);
 		setJobTitle(jobTitle);
 		setProfessionalProfile(professionalProfile);
-		notification = new Stack<>();
+		notification = new ArrayList<>();
 	}
 
 	public int getIdEmployee() {
@@ -87,11 +88,11 @@ public class Employee extends Account {
 		this.professionalProfile = professionalProfile;
 	}
 
-	public Stack<NotificationEmployee> getNotification() {
+	public ArrayList<NotificationEmployee> getNotification() {
 		return notification;
 	}
 
-	public void setNotification(Stack<NotificationEmployee> notification) {
+	public void setNotification(ArrayList<NotificationEmployee> notification) {
 		this.notification = notification;
 	}
 }

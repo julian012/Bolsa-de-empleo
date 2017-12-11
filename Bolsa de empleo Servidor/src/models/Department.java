@@ -25,7 +25,13 @@ public class Department {
 	public ArrayList<City> getCityList() {
 		return cityList;
 	}
-
 	
-	
+	public City getCityByName(String name) {
+		for (City city : cityList) {
+			if (city.getName().equals(name)) {
+				return city;
+			}
+		}
+		return null;
+	}
 }

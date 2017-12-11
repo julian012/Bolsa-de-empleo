@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import persistence.FileManager;
 import utilities.Utilities;
 
 public class Server extends Thread{
@@ -20,15 +21,21 @@ public class Server extends Thread{
 	private ArrayList<Employee> employeeList;
 	private ArrayList<JobOffer> jobOfferList;
 	private ArrayList<Connection> connectionList;
+	private FileManager fileManager;
 	private static final Logger LOGGER = Logger.getAnonymousLogger();
 	
 	public Server(int port) throws IOException {
+		fileManager = new FileManager();
 		serverSocket = new ServerSocket(port);
 		companyList = new ArrayList<>();
 		employeeList = new ArrayList<>();
 		jobOfferList = new ArrayList<>();
 		connectionList = new ArrayList<>();
 		departmentList = new ArrayList<>();
+	}
+	
+	public ArrayList<Department> getDepartmentList(){
+		return departmentList;
 	}
 	
 	public void startServer() {
@@ -69,7 +76,7 @@ public class Server extends Thread{
 				break;
 				
 			case SEND_INFO_COMPANY_ACCOUNT:
-				
+				createAccountCompany(socket);
 				break;
 			default:
 				
@@ -81,6 +88,25 @@ public class Server extends Thread{
 			String password = inputStream.readUTF();
 			signIn(type, email, password, socket);
 		}
+	}
+	
+	private void createAccountCompany(Socket socket) throws IOException {
+		DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+		String email = inputStream.readUTF();
+		String password = inputStream.readUTF();
+		String numberPhone = inputStream.readUTF();
+		String address = inputStream.readUTF();
+		String city = inputStream.readUTF();
+		String department = inputStream.readUTF();
+		int id = inputStream.readInt();
+		String name = inputStream.readUTF();
+		String description = inputStream.readUTF();
+		String nameImage = inputStream.readUTF();
+		byte[] imageData = new byte[inputStream.readInt()];
+		inputStream.readFully(imageData);
+		Company company = new Company(email, password, nameImage, numberPhone, address, searchCityByName(department, city), id, name, description);
+		companyList.add(company);
+		connectionList.add(new Connection(socket, this, company));
 	}
 	
 	private void createAccountEmployee(Socket socket) throws IOException {
@@ -104,6 +130,7 @@ public class Server extends Thread{
 				lastName, Utilities.StringToDate(birthDate), jobTitle, professionalPorfile);
 		Utilities.saveImage(imageData, nameImage);
 		employeeList.add(employee);
+		fileManager.saveXMLEmployee(employeeList);
 		connectionList.add(new Connection(socket, this, employee));
 	}
 	
@@ -170,16 +197,20 @@ public class Server extends Thread{
 	}
 	
 	private void signInEmployee(String email, String password, Socket socket) {
+		boolean result = true;
 		for (Employee e : employeeList) {
 			if (e.getEmail().equals(email) && e.getPassword().equals(password)) {
 				try {
 					connectionList.add(new Connection(socket, this, e));
+					result = false;
 				} catch (IOException e1) {
 					LOGGER.log(Level.SEVERE, e1.getMessage());
 				}
 			}
 		}
-		wrongPassword(socket);
+		if (result) {
+			wrongPassword(socket);
+		}
 	} 
 	
 	private void wrongPassword(Socket socket) {

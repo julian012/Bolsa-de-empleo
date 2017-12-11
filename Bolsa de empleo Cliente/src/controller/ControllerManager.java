@@ -92,6 +92,8 @@ public class ControllerManager implements ActionListener, WindowListener{
 	public void validateResponse() {
 		if (client.getResultConnection().equals(Request.WRONG_INFO.toString())) {
 			JOptionPane.showMessageDialog(login, "Email o contraeña incorrecta");
+		}else {
+			System.out.println("buena");
 		}
 	}
 
@@ -185,7 +187,17 @@ public class ControllerManager implements ActionListener, WindowListener{
 		String name = createAccount.getNameCompany();
 		String description = createAccount.getDecriptionCompany();
 		String password = createAccount.getPasswordCompany();
-		client.createAccountCompany(email, photoPath, password, numberPhone, address, city, department, id, name, description);
+		try {
+			client.createAccountCompany(email, photoPath, password, numberPhone, address, city, department, id, name, description);
+			Thread.sleep(4000);
+			validateStart(client.isConnection());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {

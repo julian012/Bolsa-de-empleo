@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Connection extends Thread{
 
@@ -14,6 +16,7 @@ public class Connection extends Thread{
 	private Server server;
 	private Employee employee;
 	private Company company;
+	private static final Logger LOGGER = Logger.getAnonymousLogger();
 
 	public Connection(Socket socket, Server server, Employee employee) throws IOException {
 		this.socket = socket;
@@ -40,15 +43,33 @@ public class Connection extends Thread{
 	public boolean isConnectionUp() {
 		return connectionUp;
 	}
+	
+	public void closeConnection() {
+		connectionUp = false;
+		try {
+			socket.close();
+			outputStream.close();
+			inputStream.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+	}
 
 	@Override
 	public void run() {
 		while(connectionUp) {
 			try {
 				String option = inputStream.readUTF();
+				switch (Request.valueOf(option)) {
+				case CLOSE_CONNECTION:
+					closeConnection();
+					break;
+
+				default:
+					break;
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}

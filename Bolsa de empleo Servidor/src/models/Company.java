@@ -1,20 +1,30 @@
 package models;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class Company extends Account{
 
 	private int idCompany;
 	private String nameCompany;
 	private String description;
-	private Stack<NotificationCompany> notificationList;
+	private ArrayList<NotificationCompany> notificationList;
+	
 	public Company(String email, String password, String namePhoto, String numberPhone, String address, City city,
-			int idCompany, String nameCompany, String description, Stack<NotificationCompany> notificationList) {
+			int idCompany, String nameCompany, String description, ArrayList<NotificationCompany> notificationList) {
 		super(email, password, namePhoto, numberPhone, address, city);
 		setIdCompany(idCompany);
 		setNameCompany(nameCompany);
 		setDescription(description);
 		setNotificationList(notificationList);
+	}
+	
+	public Company(String email, String password, String namePhoto, String numberPhone, String address, City city,
+			int idCompany, String nameCompany, String description) {
+		super(email, password, namePhoto, numberPhone, address, city);
+		setIdCompany(idCompany);
+		setNameCompany(nameCompany);
+		setDescription(description);
+		notificationList = new ArrayList<>();
 	}
 	
 	public int getIdCompany() {
@@ -41,11 +51,11 @@ public class Company extends Account{
 		this.description = description;
 	}
 	
-	public Stack<NotificationCompany> getNotificationList() {
+	public ArrayList<NotificationCompany> getNotificationList() {
 		return notificationList;
 	}
 	
-	public void setNotificationList(Stack<NotificationCompany> notificationList) {
+	public void setNotificationList(ArrayList<NotificationCompany> notificationList) {
 		this.notificationList = notificationList;
 	}
 }

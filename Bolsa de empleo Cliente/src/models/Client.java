@@ -21,7 +21,7 @@ public class Client extends Thread{
 	private Socket socket;
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
-	private boolean connectionUp;
+	public boolean connectionUp;
 	private String host;
 	private int port;
 	private String resultConnection;
@@ -122,8 +122,35 @@ public class Client extends Thread{
 	}
 	
 	public void createAccountCompany(String email, String photoPath, String password, String numberPhone,
-			String address, String city, String department, int id, String name, String description) {
-		
+			String address, String city, String department, int id, String name, String description) throws IOException{
+		socket = new Socket(host, port);
+		inputStream = new DataInputStream(socket.getInputStream());
+		outputStream = new DataOutputStream(socket.getOutputStream());
+		outputStream.writeUTF(Request.SEND_INFO_COMPANY_ACCOUNT.toString());
+		outputStream.writeUTF(email);
+		outputStream.writeUTF(password);
+		outputStream.writeUTF(numberPhone);
+		outputStream.writeUTF(address);
+		outputStream.writeUTF(city);
+		outputStream.writeUTF(department);
+		outputStream.writeInt(id);
+		outputStream.writeUTF(name);
+		outputStream.writeUTF(description);
+		sendImage(photoPath, outputStream);
+		initConnection();
+	}
+	
+	public void closeConnection() {
+		try {
+			outputStream.writeUTF(Request.CLOSE_CONNECTION.toString());
+			connectionUp = false;
+			outputStream.close();
+			inputStream.close();
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

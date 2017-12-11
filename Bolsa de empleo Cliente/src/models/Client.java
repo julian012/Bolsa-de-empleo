@@ -42,17 +42,6 @@ public class Client extends Thread{
 		start();
 	}
 	
-	@Override
-	public void run() {
-		while(connectionUp) {
-			try {
-				String option = inputStream.readUTF();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public String[] getDeparmentList() throws IOException {
 		socket = new Socket(host, port);
@@ -81,13 +70,27 @@ public class Client extends Thread{
 	
 	public void createAccountEmployee(String email, String photoPath, String password, String numberPhone,
 			String address, String city, String department, int id, String firstName, String lastName,
-			Date birthDate, String jobTitle, String professionalPorfile) {
-		
+			Date birthDate, String jobTitle, String professionalPorfile) throws IOException {
+		socket = new Socket(host, port);
+		inputStream = new DataInputStream(socket.getInputStream());
+		outputStream = new DataOutputStream(socket.getOutputStream());
 		
 	}
 	
 	public void createAccountCompany(String email, String photoPath, String password, String numberPhone,
 			String address, String city, String department, int id, String name, String description) {
 		
+	}
+	
+	@Override
+	public void run() {
+		while(connectionUp) {
+			try {
+				String option = inputStream.readUTF();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

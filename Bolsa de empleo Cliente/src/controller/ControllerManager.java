@@ -19,12 +19,14 @@ import models.Client;
 import models.Request;
 import view.JDSignIn;
 import view.JFCreateAccount;
+import view.JFMainWindow;
 
 public class ControllerManager implements ActionListener, WindowListener{
 
 	private JDSignIn login;
 	private Client client;
 	private JFCreateAccount createAccount;
+	private JFMainWindow mainWindow;
 
 	public ControllerManager() throws FileNotFoundException, IOException {
 		login = new JDSignIn(this);
@@ -93,7 +95,15 @@ public class ControllerManager implements ActionListener, WindowListener{
 		if (client.getResultConnection().equals(Request.WRONG_INFO.toString())) {
 			JOptionPane.showMessageDialog(login, "Email o contraeña incorrecta");
 		}else {
-			System.out.println("buena");
+			try {
+				client.requestUserName();
+				Thread.sleep(3000);
+				mainWindow = new JFMainWindow(client.getResultConnection(), client.getUserName());
+				//createAccount.setVisible(false);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

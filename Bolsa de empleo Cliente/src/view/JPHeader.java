@@ -27,12 +27,12 @@ public class JPHeader extends JPanel {
 		jLTitle.setOpaque(true);
 		jLTitle.setForeground(Color.white);
 		jLTitle.setFont(new Font("Arial", Font.BOLD, 17));
-		jLTitle.setBounds(0, 0, 200, 60);
+		jLTitle.setBounds(0, 0, 200, 50);
 		add(jLTitle);
 		
 		try {
 			photoLogo = new JPanelPhoto(ImageIO.read(new File("files/imagenes/icon.png")), Constant.COLORBLUE);
-			photoLogo.setBounds(200, 0, 60, 60);
+			photoLogo.setBounds(200, 0, 60, 50);
 			add(photoLogo);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -42,12 +42,12 @@ public class JPHeader extends JPanel {
 		jLSpace = new JLabel("  ");
 		jLSpace.setOpaque(true);
 		jLSpace.setBackground(Constant.COLORBLUE);
-		jLSpace.setBounds(260, 0, 400, 60);
+		jLSpace.setBounds(260, 0, 400, 50);
 		add(jLSpace);
 		
 		try {
 			photoUser = new JPanelPhoto(ImageIO.read(new File("files/imagenes/icon.png")), Constant.COLORBLUE);
-			photoUser.setBounds(660, 0, 60, 60);
+			photoUser.setBounds(660, 0, 60, 50);
 			add(photoUser);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -59,12 +59,12 @@ public class JPHeader extends JPanel {
 		jLNamePerson.setOpaque(true);
 		jLNamePerson.setForeground(Color.white);
 		jLNamePerson.setFont(new Font("Arial", Font.BOLD, 18));
-		jLNamePerson.setBounds(720, 0, 274, 60);
+		jLNamePerson.setBounds(720, 0, 274, 50);
 		add(jLNamePerson);
 		
 		try {
 			closeSession = new JPanelPhoto(ImageIO.read(new File("files/imagenes/ajustes.png")), Constant.COLORBLUE);
-			closeSession.setBounds(994, 0, 60, 60);
+			closeSession.setBounds(994, 0, 60, 50);
 			add(closeSession);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

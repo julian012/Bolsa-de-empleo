@@ -1,11 +1,9 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class JPanelPhoto extends JPanel {
@@ -22,7 +20,6 @@ public class JPanelPhoto extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawImage(image, 1, 1, this.getWidth(),this.getHeight(),this);
-		
 	}
 }
 

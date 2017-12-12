@@ -54,17 +54,41 @@ public class Connection extends Thread{
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
+	
+	public void reqUserName() {
+		if (employee != null) {
+			try {
+				outputStream.writeUTF(Request.USER_NAME.toString());
+				outputStream.writeUTF(employee.getFistName());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				outputStream.writeUTF(Request.USER_NAME.toString());
+				outputStream.writeUTF(company.getNameCompany());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	@Override
 	public void run() {
+		System.out.println("La aplicacion comenzo");
 		while(connectionUp) {
 			try {
 				String option = inputStream.readUTF();
+				LOGGER.log(Level.FINE, "Llego: " + option);
 				switch (Request.valueOf(option)) {
 				case CLOSE_CONNECTION:
 					closeConnection();
 					break;
-
+				case USER_NAME:
+					reqUserName();
+					break;
 				default:
 					break;
 				}

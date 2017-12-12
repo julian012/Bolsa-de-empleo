@@ -25,6 +25,7 @@ public class Client extends Thread{
 	private String host;
 	private int port;
 	private String resultConnection;
+	private String nameUser;
 	private static final Logger LOGGER = Logger.getAnonymousLogger();
 	
 	public Client(String host, int port){
@@ -40,7 +41,13 @@ public class Client extends Thread{
 		outputStream.writeUTF(email);
 		outputStream.writeUTF(password);
 		resultConnection = inputStream.readUTF();
-		
+		if (!resultConnection.equals(Request.WRONG_INFO.toString())) {
+			initConnection();
+		}
+	}
+	
+	public String getUserName() {
+		return nameUser;
 	}
 	
 	public String getResultConnection() {
@@ -140,6 +147,24 @@ public class Client extends Thread{
 		initConnection();
 	}
 	
+	public void requestUserName() {
+		try {
+			outputStream.writeUTF(Request.USER_NAME.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void resUserName() {
+		try {
+			nameUser = inputStream.readUTF();
+			System.out.println("LLego el nombre " + nameUser);
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+	}
+	
 	public void closeConnection() {
 		try {
 			outputStream.writeUTF(Request.CLOSE_CONNECTION.toString());
@@ -148,16 +173,24 @@ public class Client extends Thread{
 			inputStream.close();
 			socket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
 	
 	@Override
 	public void run() {
+		System.out.println("La aplicacion comenzo");
 		while(connectionUp) {
 			try {
 				String option = inputStream.readUTF();
+				switch (Request.valueOf(option)) {
+				case USER_NAME:
+					resUserName();
+					break;
+
+				default:
+					break;
+				}
 			} catch (IOException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage());
 			}

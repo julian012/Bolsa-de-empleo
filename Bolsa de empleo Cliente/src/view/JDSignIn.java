@@ -82,12 +82,12 @@ public class JDSignIn extends JFrame implements MouseListener, WindowListener, A
 		constraints.ipady = 10;
 		constraints.gridy = 2;
 		constraints.insets = new Insets(30, 139, 5, 139);
-		jTFEmail = new JTextField();
+		jTFEmail = new JTextField("julicamnet@gmail.com");
 		jTFEmail.setBorder(BorderFactory.createTitledBorder("Email"));
 		add(jTFEmail, constraints);
 		constraints.gridy = 3;
 		constraints.insets = new Insets(0, 139, 5, 139);
-		jTFPassword = new JPasswordField();
+		jTFPassword = new JPasswordField("julian012");
 		jTFPassword.setBorder(BorderFactory.createTitledBorder("Contraseña"));
 		add(jTFPassword, constraints);
 		constraints.gridy = 4;

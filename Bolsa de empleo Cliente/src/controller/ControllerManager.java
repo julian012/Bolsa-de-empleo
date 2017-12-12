@@ -98,7 +98,7 @@ public class ControllerManager implements ActionListener, WindowListener{
 			try {
 				client.requestUserName();
 				Thread.sleep(3000);
-				mainWindow = new JFMainWindow(client.getResultConnection(), client.getUserName());
+				mainWindow = new JFMainWindow(client.getResultConnection(), client.getUserName(), this);
 				//createAccount.setVisible(false);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -130,7 +130,11 @@ public class ControllerManager implements ActionListener, WindowListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch (Events.valueOf(e.getActionCommand())) {
+		String value = e.getActionCommand();
+		if (mainWindow != null) {
+			mainWindow.selectedButtomEmployee(value);
+		}
+		switch (Events.valueOf(value)) {
 		case SIGN_IN:
 			singIn();
 			break;
@@ -230,8 +234,12 @@ public class ControllerManager implements ActionListener, WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		createAccount.setVisible(false);
-		login.setVisible(true);
+		if(mainWindow != null) {
+			client.closeConnection();
+		}else {
+			createAccount.setVisible(false);
+			login.setVisible(true);
+		}
 	}
 
 	@Override

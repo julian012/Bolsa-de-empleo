@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.ControllerManager;
 import controller.Events;
 
 public class JPMenuEmployee extends JPanel implements MouseListener{
@@ -26,8 +27,10 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 	private String nameUser;
 	private GridBagConstraints constraints;
 	private JPHeader jpHeader;
+	private ControllerManager controllerManager;
 	
-	public JPMenuEmployee(String nameUser) {
+	public JPMenuEmployee(String nameUser, ControllerManager controllerManager) {
+		this.controllerManager = controllerManager;
 		this.nameUser = nameUser;
 		constraints = new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -65,8 +68,8 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		jBHome.setFont(Constant.FONT_MENU_FRAME);
 		jBHome.setForeground(Constant.COLOR_TEXT_GRAY);
 		jBHome.addMouseListener(this);
-		//jbCompany.addActionListener(this);
-		//jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
+		jBHome.addActionListener(controllerManager);
+		jBHome.setActionCommand(Events.JBHOME_EMPLOYEE.toString());
 		add(jBHome, constraints);
 		
 		constraints.gridx = 2;
@@ -76,8 +79,8 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		jBApplication.setFont(Constant.FONT_MENU_FRAME);
 		jBApplication.setForeground(Constant.COLOR_TEXT_GRAY);
 		jBApplication.addMouseListener(this);
-		//jbCompany.addActionListener(this);
-		//jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
+		jBApplication.addActionListener(controllerManager);
+		jBApplication.setActionCommand(Events.JBAPPLICATION_EMPLOYEE.toString());
 		add(jBApplication, constraints);
 		
 		constraints.gridx = 3;
@@ -87,8 +90,8 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		jBSearchJob.setFont(Constant.FONT_MENU_FRAME);
 		jBSearchJob.setForeground(Constant.COLOR_TEXT_GRAY);
 		jBSearchJob.addMouseListener(this);
-		//jbCompany.addActionListener(this);
-		//jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
+		jBSearchJob.addActionListener(controllerManager);
+		jBSearchJob.setActionCommand(Events.JBSEARCHJOB_EMPLOYEE.toString());
 		add(jBSearchJob, constraints);
 		
 		constraints.gridx = 4;
@@ -98,8 +101,8 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		jBNotification.setFont(Constant.FONT_MENU_FRAME);
 		jBNotification.setForeground(Constant.COLOR_TEXT_GRAY);
 		jBNotification.addMouseListener(this);
-		//jbCompany.addActionListener(this);
-		//jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
+		jBNotification.addActionListener(controllerManager);
+		jBNotification.setActionCommand(Events.JBNOTIFICATION_EMPLOYEE.toString());
 		add(jBNotification, constraints);
 		
 		constraints.gridx = 5;
@@ -109,8 +112,8 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		jBCurriculum.setFont(Constant.FONT_MENU_FRAME);
 		jBCurriculum.setForeground(Constant.COLOR_TEXT_GRAY);
 		jBCurriculum.addMouseListener(this);
-		//jbCompany.addActionListener(this);
-		//jbCompany.setActionCommand(Events.SELECT_JCOMPANY.toString());
+		jBCurriculum.addActionListener(controllerManager);
+		jBCurriculum.setActionCommand(Events.JBCURRICULUM_EMPLOYE.toString());
 		add(jBCurriculum, constraints);
 		
 	}
@@ -231,6 +234,45 @@ public class JPMenuEmployee extends JPanel implements MouseListener{
 		}else if (x == xCurriculum) {
 			changeColorCurriculum(false);
 		}
+	}
+	
+	public void selectedButtom(String value) {
+		if (value.equals(Events.JBHOME_EMPLOYEE.toString())) {
+			aplication = false;
+			home = true;
+			searchJob = false;
+			notification = false;
+			curriculum = false;
+		}else if(value.equals(Events.JBAPPLICATION_EMPLOYEE.toString())) {
+			aplication = true;
+			home = false;
+			searchJob = false;
+			notification = false;
+			curriculum = false;
+		}else if (value.equals(Events.JBSEARCHJOB_EMPLOYEE.toString())) {
+			aplication = false;
+			home = false;
+			searchJob = true;
+			notification = false;
+			curriculum = false;
+		}else if (value.equals(Events.JBNOTIFICATION_EMPLOYEE.toString())) {
+			aplication = false;
+			home = false;
+			searchJob = false;
+			notification = true;
+			curriculum = false;
+		}else if (value.equals(Events.JBCURRICULUM_EMPLOYE.toString())) {
+			aplication = false;
+			home = false;
+			searchJob = false;
+			notification = false;
+			curriculum = true;
+		}
+		changeColorApplication(false);
+		changeColorCurriculum(false);
+		changeColorHome(false);
+		changeColorNotification(false);
+		changeColorSearchJob(false);
 	}
 	
 	@Override

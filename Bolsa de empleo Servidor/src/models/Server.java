@@ -106,6 +106,7 @@ public class Server extends Thread{
 		inputStream.readFully(imageData);
 		Company company = new Company(email, password, nameImage, numberPhone, address, searchCityByName(department, city), id, name, description);
 		companyList.add(company);
+		fileManager.saveXMLCompany(companyList);
 		connectionList.add(new Connection(socket, this, company));
 	}
 	
@@ -201,6 +202,7 @@ public class Server extends Thread{
 		for (Employee e : employeeList) {
 			if (e.getEmail().equals(email) && e.getPassword().equals(password)) {
 				try {
+					System.out.println("Entro");
 					connectionList.add(new Connection(socket, this, e));
 					result = false;
 				} catch (IOException e1) {

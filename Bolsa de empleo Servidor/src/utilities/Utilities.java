@@ -22,8 +22,6 @@ public class Utilities {
 		Date date;
 		try {
 			date = formatter.parse(dateInString);
-			System.out.println(date);
-			System.out.println(formatter.format(date));
 			return date;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

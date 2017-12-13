@@ -9,6 +9,6 @@ public class JPApplicationEmployee extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public JPApplicationEmployee() {
-		setBackground(Color.blue);
+		setBackground(Color.decode("#F7F5F5"));
 	}
 }

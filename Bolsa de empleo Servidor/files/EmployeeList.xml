@@ -15,4 +15,19 @@
     <department>Boyacá</department>
     <city>Tunja</city>
   </Employee>
+  <Employee>
+    <id>456743</id>
+    <firstName>Andres Felipe</firstName>
+    <lastName>Gonzalez Bonilla</lastName>
+    <birthDate>15/04/1999</birthDate>
+    <jobTitle>Ingeniero de Sistemas</jobTitle>
+    <professionalPorfile>kj,hgftdrtyhjikkyghtfrdetyjukijuythr</professionalPorfile>
+    <email>felip@gmail.com</email>
+    <photoPath>Captura de pantalla de 2017-11-18 11-21-39.png</photoPath>
+    <password>felip</password>
+    <numberPhone>76543</numberPhone>
+    <address>Cerca a la iglesia</address>
+    <department>Boyacá</department>
+    <city>Tibasosa</city>
+  </Employee>
 </EmployeeList>
